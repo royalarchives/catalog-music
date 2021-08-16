@@ -1,0 +1,19 @@
+{
+  "name": "@lootbox/library-music",
+  "version": "1.0.0",
+  "description": "Scans Library to index your music collection",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lootbox/library-music"
+  },
+  "author": {
+    "name": "lootbox",
+    "email": "lootboxproject@protonmail.com",
+    "url": "http://github.com/lootbox"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "music-metadata": "^7.11.0"
+  }
+}
