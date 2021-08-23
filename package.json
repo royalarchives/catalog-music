@@ -15,5 +15,9 @@
   "license": "MIT",
   "dependencies": {
     "music-metadata": "^7.11.0"
+  },
+  "configuration": {
+    "description": "Adds music browsing by artist, album and credits",
+    "icon": "music"
   }
 }
