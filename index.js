@@ -4,36 +4,36 @@ const credits = require('./scan/credits.js')
 const tracks = require('./scan/tracks.js')
 
 module.exports = {
-  scan: async (library) => {
+  scan: async (catalog) => {
     console.log('[music-indexer]', 'scanning tracks')
-    await tracks.scan(library)
-    if (!library.tracks.length) {
-      return console.log('[indexer]', 'no tracks in library')
+    await tracks.scan(catalog)
+    if (!catalog.tracks.length) {
+      return console.log('[indexer]', 'no tracks in catalog')
     }
     console.log('[music-indexer]', 'scanning albums')
-    await albums.scan(library)
+    await albums.scan(catalog)
     console.log('[music-indexer]', 'scanning genres')
-    await genres.scan(library)
+    await genres.scan(catalog)
     console.log('[music-indexer]', 'scanning credits')
-    await credits.scan(library)
+    await credits.scan(catalog)
   },
-  load: async (library) => {
-    if (!library.tracks) {
-      return console.log('[indexer]', 'no tracks in library')
+  load: async (catalog) => {
+    if (!catalog.tracks) {
+      return console.log('[indexer]', 'no tracks in catalog')
     }
     console.log('[indexer]', 'indexing album information')
-    await albums.indexTracks(library)
-    await albums.indexGenres(library)
-    await albums.indexCredits(library)
+    await albums.indexTracks(catalog)
+    await albums.indexGenres(catalog)
+    await albums.indexCredits(catalog)
     console.log('[indexer]', 'indexing genre information')
-    await genres.indexAlbums(library)
-    await genres.indexTracks(library)
-    await genres.indexCredits(library)
+    await genres.indexAlbums(catalog)
+    await genres.indexTracks(catalog)
+    await genres.indexCredits(catalog)
     console.log('[indexer]', 'indexing credit information')
-    await credits.indexTracks(library)
-    await credits.indexGenres(library)
-    await credits.indexAlbums(library)
-    library.api.music = {
+    await credits.indexTracks(catalog)
+    await credits.indexGenres(catalog)
+    await credits.indexAlbums(catalog)
+    catalog.api.music = {
       albums: {
         get: require('./api/albums.get.js'),
         list: require('./api/albums.list.js')
@@ -51,6 +51,6 @@ module.exports = {
         list: require('./api/credits.list.js')
       }
     }
-    return library
+    return catalog
   }
 }

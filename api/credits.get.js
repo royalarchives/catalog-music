@@ -1,5 +1,5 @@
-module.exports = (library, options) => {
-  const person = library.getObject(options.id)
+module.exports = (catalog, options) => {
+  const person = catalog.getObject(options.id)
   if (!person) {
     throw new Error('invalid-id')
   }

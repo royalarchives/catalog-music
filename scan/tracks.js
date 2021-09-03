@@ -4,21 +4,21 @@ module.exports = {
   scan: scanTracks
 }
 
-async function scanTracks (library) {
-  library.tracks = []
-  for (const file of library.files) {
+async function scanTracks (catalog) {
+  catalog.tracks = []
+  for (const file of catalog.files) {
     if (file.extension !== 'mp3' && file.extension !== 'flac') {
       continue
     }
-    const track = await processTrack(library, file)
+    const track = await processTrack(catalog, file)
     if (track) {
-      library.tracks.push(track)
+      catalog.tracks.push(track)
     }
   }
-  library.indexArray(library.tracks)
+  catalog.indexArray(catalog.tracks)
 }
 
-async function processTrack (library, file) {
+async function processTrack (catalog, file) {
   let metaData
   try {
     metaData = await MusicMetaData.parseFile(file.path)
@@ -26,7 +26,7 @@ async function processTrack (library, file) {
     console.error('[music-indexer]', 'error reading meta data', file.path, error)
   }
   const track = {
-    id: `track_${library.tracks.length + 1}`,
+    id: `track_${catalog.tracks.length + 1}`,
     type: 'track',
     path: file.path
   }

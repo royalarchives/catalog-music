@@ -1,22 +1,22 @@
 {
-  "name": "@lootbox/library-music",
+  "name": "@royalarchives/catalog-music",
   "version": "1.0.0",
-  "description": "Scans Library to index your music collection",
+  "description": "Scans Catalog to index your music collection",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lootbox/library-music"
+    "url": "https://github.com/server/catalog-music"
   },
   "author": {
-    "name": "lootbox",
-    "email": "lootboxproject@protonmail.com",
-    "url": "http://github.com/lootbox"
+    "name": "server",
+    "email": "serverproject@protonmail.com",
+    "url": "http://github.com/server"
   },
   "license": "MIT",
   "dependencies": {
     "music-metadata": "^7.11.0"
   },
-  "lootbox": {
+  "server": {
     "description": "Adds music browsing by artist, album and credits",
     "icon": "music"
   }

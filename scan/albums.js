@@ -11,28 +11,28 @@ function normalize (text) {
   return (text || '').toLowerCase().replace(/[\W_]+/g, '')
 }
 
-async function scanAlbums (library) {
-  library.albums = []
+async function scanAlbums (catalog) {
+  catalog.albums = []
   const uniqueKeys = []
-  for (const track of library.tracks) {
+  for (const track of catalog.tracks) {
     if (!track.artist || !track.album) {
       continue
     }
-    const album = await processAlbum(library, track, uniqueKeys)
+    const album = await processAlbum(catalog, track, uniqueKeys)
     if (album) {
-      library.albums.push(album)
+      catalog.albums.push(album)
     }
   }
-  library.indexArray(library.albums)
+  catalog.indexArray(catalog.albums)
 }
 
-async function processAlbum (library, track, uniqueKeys) {
+async function processAlbum (catalog, track, uniqueKeys) {
   const key = normalize(track.artist) + normalize(track.album)
   if (uniqueKeys.indexOf(key) === -1) {
     uniqueKeys.push(key)
     return {
       type: 'album',
-      id: `album_${library.albums.length + 1}`,
+      id: `album_${catalog.albums.length + 1}`,
       name: track.album,
       nameSort: track.albumsort || track.album,
       artist: track.albumartist || track.artist,
@@ -43,21 +43,21 @@ async function processAlbum (library, track, uniqueKeys) {
   }
 }
 
-async function indexTracks (library) {
-  for (const album of library.albums) {
+async function indexTracks (catalog) {
+  for (const album of catalog.albums) {
     album.tracks = []
-    const albumTracks = library.tracks.filter(track => track.albumid === album.id)
+    const albumTracks = catalog.tracks.filter(track => track.albumid === album.id)
     for (const track of albumTracks) {
       album.tracks.push(track.id)
     }
   }
 }
 
-async function indexGenres (library) {
-  for (const album of library.albums) {
+async function indexGenres (catalog) {
+  for (const album of catalog.albums) {
     album.genres = []
     for (const trackid of album.tracks) {
-      const track = library.getObject(trackid)
+      const track = catalog.getObject(trackid)
       if (!track.genres) {
         continue
       }
@@ -70,11 +70,11 @@ async function indexGenres (library) {
   }
 }
 
-async function indexCredits (library) {
-  for (const album of library.albums) {
+async function indexCredits (catalog) {
+  for (const album of catalog.albums) {
     for (const type of creditCategories) {
       for (const trackid of album.tracks) {
-        const track = library.getObject(trackid)
+        const track = catalog.getObject(trackid)
         if (!track[type]) {
           continue
         }

@@ -2,7 +2,7 @@
  changelog
 
 Check the repository commits for detailed information:  
-https://github.com/lootbox/library-music/commits/master
+https://github.com/server/library-music/commits/master
 
 | Date       | Description                                                      |
 |------------|------------------------------------------------------------------|

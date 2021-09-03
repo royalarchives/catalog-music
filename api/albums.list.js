@@ -1,3 +1,3 @@
-module.exports = (library, options) => {
-  return library.getObjects(library.albums, options)
+module.exports = (catalog, options) => {
+  return catalog.getObjects(catalog.albums, options)
 }

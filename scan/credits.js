@@ -28,17 +28,17 @@ function normalize (text) {
   return text.toLowerCase().replace(/[\W_]+/g, '').trim()
 }
 
-async function scanCredits (library) {
+async function scanCredits (catalog) {
   const uniqueKeys = []
-  library.credits = []
-  library.creditCategories = []
+  catalog.credits = []
+  catalog.creditCategories = []
   let artistCategory
-  for (const track of library.tracks) {
+  for (const track of catalog.tracks) {
     for (const type of creditCategories) {
       if (!track[type] || !track[type].length) {
         continue
       }
-      let category = await processCreditCategory(library, type)
+      let category = await processCreditCategory(catalog, type)
       if (type === 'artist') {
         artistCategory = category
       } else if (type === 'artists') {
@@ -49,51 +49,51 @@ async function scanCredits (library) {
       const names = nameList.split(',')
       for (const i in names) {
         const name = names[i]
-        const credit = await processCredit(library, name, category.id, uniqueKeys)
+        const credit = await processCredit(catalog, name, category.id, uniqueKeys)
         if (credit) {
-          library.credits.push(credit)
+          catalog.credits.push(credit)
           categoryItems++
         }
       }
       if (type !== 'artists' && category && categoryItems > 0) {
-        library.creditCategories.push(category)
+        catalog.creditCategories.push(category)
       }
     }
   }
-  library.indexArray(library.creditCategories)
-  library.indexArray(library.credits)
+  catalog.indexArray(catalog.creditCategories)
+  catalog.indexArray(catalog.credits)
 }
 
-async function processCredit (library, name, categoryid, uniqueKeys) {
+async function processCredit (catalog, name, categoryid, uniqueKeys) {
   const key = normalize(name)
   const existingIndex = uniqueKeys.indexOf(key)
   if (existingIndex === -1) {
     uniqueKeys.push(key)
     return {
       type: 'credit',
-      id: `credit_${library.credits.length + 1}`,
+      id: `credit_${catalog.credits.length + 1}`,
       name,
       categories: [categoryid]
     }
-  } else if (library.credits[existingIndex].categories.indexOf(categoryid) === -1) {
-    library.credits[existingIndex].categories.push(categoryid)
+  } else if (catalog.credits[existingIndex].categories.indexOf(categoryid) === -1) {
+    catalog.credits[existingIndex].categories.push(categoryid)
   }
 }
 
-async function processCreditCategory (library, name) {
+async function processCreditCategory (catalog, name) {
   return {
     type: 'category',
-    id: `category_${library.creditCategories.length + 1}`,
+    id: `category_${catalog.creditCategories.length + 1}`,
     name
   }
 }
 
-async function indexTracks (library) {
+async function indexTracks (catalog) {
   console.log('index tracks')
-  for (const credit of library.credits) {
+  for (const credit of catalog.credits) {
     credit.tracks = []
     const creditKey = normalize(credit.name)
-    for (const track of library.tracks) {
+    for (const track of catalog.tracks) {
       for (const type of creditCategories) {
         if (!track[type]) {
           continue
@@ -114,10 +114,10 @@ async function indexTracks (library) {
   }
 }
 
-async function indexGenres (library) {
-  for (const credit of library.credits) {
+async function indexGenres (catalog) {
+  for (const credit of catalog.credits) {
     credit.genres = []
-    for (const track of library.tracks) {
+    for (const track of catalog.tracks) {
       if (!track.genres) {
         continue
       }
@@ -130,15 +130,15 @@ async function indexGenres (library) {
   }
 }
 
-async function indexAlbums (library) {
+async function indexAlbums (catalog) {
   console.log('index albums')
-  for (const credit of library.credits) {
+  for (const credit of catalog.credits) {
     credit.albums = []
     const normalizedName = normalize(credit.name)
     for (const type of creditCategories) {
-      for (const album of library.albums) {
+      for (const album of catalog.albums) {
         for (const trackid of album.tracks) {
-          const track = await library.getObject(trackid)
+          const track = await catalog.getObject(trackid)
           if (!track[type]) {
             continue
           }
