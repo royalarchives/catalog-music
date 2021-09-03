@@ -78,10 +78,10 @@ async function indexCredits (catalog) {
         if (!track[type]) {
           continue
         }
-        for (const jj of track[type]) {
-          if (!album[type] || album[type].indexOf(composerid) === -1) {
+        for (const personid of track[type]) {
+          if (!album[type] || album[type].indexOf(personid) === -1) {
             album[type] = album[type] || []
-            album[type].push(composerid)
+            album[type].push(personid)
           }
         }
       }

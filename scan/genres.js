@@ -1,5 +1,3 @@
-const creditCategories = require('./credits.js').creditCategories
-
 module.exports = {
   scan: scanGenres,
   indexAlbums,
