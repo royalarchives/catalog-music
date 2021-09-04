@@ -1,16 +1,16 @@
 {
   "name": "@royalarchives/catalog-music",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Scans Catalog to index your music collection",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/server/catalog-music"
+    "url": "https://github.com/royalarchives/catalog-music"
   },
   "author": {
     "name": "server",
     "email": "serverproject@protonmail.com",
-    "url": "http://github.com/server"
+    "url": "http://github.com/royalarchives"
   },
   "license": "MIT",
   "dependencies": {

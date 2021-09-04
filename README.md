@@ -1,6 +1,6 @@
 # Library: Music
 
-A module for [Library](https://github.com/server/library) that indexes the files and extracts `MP3` and `FLAC` tracks and uses [Music-MetaData](https://github.com/borewit/music-metadata/) to read embedded information.
+A module for [Library](https://github.com/royalarchives/library) that indexes the files and extracts `MP3` and `FLAC` tracks and uses [Music-MetaData](https://github.com/borewit/music-metadata/) to read embedded information.
 
 Songs, albums, genres, and any persons associated with them are indexed into `library.tracks`, `.library.albums`, `library.genres`, and `library.<persontype>` arrays that can be sorted, filtered and paginated using the API.
 
@@ -16,11 +16,11 @@ First install the module with `NPM`:
 
     $ npm install @royalarchives/library-music
 
-If you are using [Library](https://github.com/server/library) from the command-line include the module name in your arguments:
+If you are using [Library](https://github.com/royalarchives/library) from the command-line include the module name in your arguments:
 
     $ node scanner.js @royalarchives/library-music /path/to-music
 
-If you are using [Library](https://github.com/server/library) with NodeJS include the module name in the parameters:
+If you are using [Library](https://github.com/royalarchives/library) with NodeJS include the module name in the parameters:
 
     const Library = require('@royalarchives/library')
     await Library.scan('@royalarchives/library-music', [
