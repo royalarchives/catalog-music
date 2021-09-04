@@ -16,7 +16,7 @@
   "dependencies": {
     "music-metadata": "^7.11.0"
   },
-  "server": {
+  "royalArchives": {
     "description": "Adds music browsing by artist, album and credits",
     "icon": "music"
   }
